@@ -6,6 +6,15 @@ const util = require('util');
 
 const query = util.promisify(conn.query).bind(conn);
 
+const checkIsSameId = async (request, id) => {
+    let token
+    let authHeader = request.headers.authorization
+    token = authHeader.split(" ")[1];
+    const decode = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+    const user = decode.user
+    if (id == user.id) return true
+    return false
+}
 let getUserId = async function (email) {
     const isEmailExistQuery = `SELECT id FROM users WHERE email = "${email}"`
     var userId = [];
@@ -51,7 +60,7 @@ const hashPassword = async (password) => {
     const hashedPassword = await bcrypt.hash(password, 10)
     return hashedPassword
 }
-const makeAccount = async (request, response,type="student") => {
+const makeAccount = async (request, response, type = "student") => {
     const {username, email, password, phone} = request.body
     const makeEmailQuery = `insert into users set ? `
     const hashedPassword = await hashPassword(password)
@@ -97,5 +106,46 @@ const loginAccount = asyncHandler(async (request, response) => {
     })
 })
 
+const changeAccountPassword = async (request, response, id) => {
+    const isSameId = await checkIsSameId(request, id)
+    const {oldPassword, newPassword} = request.body
+    conn.query(`select password from users where id = ${id}`, async (err, res) => {
+        if (err || !isSameId) {
+            response.status(404).json({msg: "Error 404"})
+        } else if (res.length != 0) {
+            if (res[0] && (await bcrypt.compare(oldPassword, res[0].password))) {
+                const hashNewPassword = await hashPassword(newPassword)
+                const changePasswordQuery = `update users set password = "${hashNewPassword}" where id = ${id}`
+                conn.query(changePasswordQuery, (error, result) => {
+                    if (error) {
+                        response.status(404).json({msg: "Error 404"})
+                    } else {
+                        response.status(202).json({msg: "Password Changed"})
+                    }
+                })
+            } else {
+                response.status(404).json({msg: "Not same Password"})
+            }
+        }
+    })
+}
 
-module.exports = {makeAccount, loginAccount,hashPassword}
+const changeAccountEmail = async (request, response, id) => {
+    const isSameId = await checkIsSameId(request, id)
+    const {email} = request.body
+    conn.query(`select email from users where id = ${id}`, async (err, res) => {
+        if (err || !isSameId) {
+            response.status(404).json({msg: "Error 404"})
+        } else {
+            const changeEmailQuery = `update users set email = "${email}" where id = ${id}`
+            conn.query(changeEmailQuery, (error, result) => {
+                if (error) {
+                    response.status(404).json({msg: "Error 404"})
+                } else {
+                    response.status(202).json({msg: "Email Changed"})
+                }
+            })
+        }
+    })
+}
+module.exports = {makeAccount, loginAccount, hashPassword, changeAccountPassword,changeAccountEmail}

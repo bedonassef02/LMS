@@ -43,7 +43,7 @@ const getThisInstructor = (request, response, id) => {
 
 const updateThisInstructor = async (request, response, id) => {
     const {username, email, password, phone} = request.body
-    const updateInstructorQuery = `update users set ? where id = ${id}`
+    const updateInstructorQuery = `update users set ? where id = ${id} and type="instructor"`
     const hashedPassword = await hashPassword(password)
     const values = {username: username, email: email, password: hashedPassword, phone: phone}
     conn.query(updateInstructorQuery, values, (err, res) => {

@@ -1,18 +1,23 @@
 const asyncHandler = require("express-async-handler")
 const jwt = require("jsonwebtoken")
 
-const validateToken = asyncHandler(async (req, res, next) => {
+const validateUserToken = asyncHandler(async (req, res, next) => {
     let token;
     let authHeader = req.headers.authorization
     if (authHeader && authHeader.startsWith("Bearer")) {
         token = authHeader.split(" ")[1];
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-            if (err) {
-                res.status(401)
-                return
+            try {
+                const user = decoded.user;
+                if (err) {
+                    res.status(401).json("u are not auth")
+                } else {
+                    res.status(200)
+                }
+                next()
+            } catch (error) {
+                res.status(404).json({msg: "Token Error"})
             }
-            const user = decoded.user;
-            next()
         })
         if (!token) {
             res.status(401).json("Error 401")
@@ -22,4 +27,4 @@ const validateToken = asyncHandler(async (req, res, next) => {
     }
 })
 
-module.exports = validateToken
+module.exports = validateUserToken
