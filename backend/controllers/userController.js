@@ -11,4 +11,5 @@ const register = (req,res)=>{
     makeAccount(req,res)
 }
 
+
 module.exports = {login,register,index}

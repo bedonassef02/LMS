@@ -51,7 +51,7 @@ const hashPassword = async (password) => {
     const hashedPassword = await bcrypt.hash(password, 10)
     return hashedPassword
 }
-const makeAccount = async (request, response) => {
+const makeAccount = async (request, response,type="student") => {
     const {username, email, password, phone} = request.body
     const makeEmailQuery = `insert into users set ? `
     const hashedPassword = await hashPassword(password)
@@ -61,7 +61,7 @@ const makeAccount = async (request, response) => {
         password: hashedPassword,
         phone: phone,
         status: "active",
-        type: "student"
+        type: type
     }
     const status = checkValidEmail(email)
     if (status == 404) {
@@ -98,4 +98,4 @@ const loginAccount = asyncHandler(async (request, response) => {
 })
 
 
-module.exports = {makeAccount, loginAccount}
+module.exports = {makeAccount, loginAccount,hashPassword}
