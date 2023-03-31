@@ -1,5 +1,5 @@
 var StudentModel = require("../../models/StudentModel")
-const {DatabaseError, StudentInfo} = require("../Response/ResponseController");
+const {DatabaseError, StudentInfo, CourseRegistered, CoursesList} = require("../Response/ResponseController");
 const studentModel = new StudentModel()
 
 class StudentController {
@@ -18,22 +18,12 @@ class StudentController {
         const id = request.params.id
         const courses = await studentModel.courses(id)
         if (courses) {
-            StudentInfo(response, courses)
+            CoursesList(response, courses)
         } else {
             DatabaseError(response)
         }
     }
 
-    async registerCourses(request, response){
-        const id = request.params.id
-        const {course_id} = request.body
-        const isRegisterd = await studentModel.courses(id)
-        if (courses) {
-            StudentInfo(response, courses)
-        } else {
-            DatabaseError(response)
-        }
-    }
 
 }
 

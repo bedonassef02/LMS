@@ -12,9 +12,10 @@ app.use(cors())
 var ValidateToken = require("./middleware/ValidateToken")
 const validateToken = new ValidateToken();
 
-app.use("/api",require("./routes/userRouter"))
-app.use("/api/admin",validateToken.validateAdminToken,require("./routes/adminRouter"))
-app.use("/api/students",validateToken.validateStudentToken,require("./routes/studentRouter"))
+app.use("/api", require("./routes/userRouter"))
+app.use("/api/admin", validateToken.validateAdminToken, require("./routes/adminRouter"))
+app.use("/api/students", validateToken.validateStudentToken, require("./routes/studentRouter"))
+app.use("/api/courses", require("./routes/coursesRouter"))
 
 app.listen(port, () => {
     console.log(`server running on port ${port}`)

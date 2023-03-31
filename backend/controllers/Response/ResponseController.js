@@ -1,3 +1,4 @@
+const {response} = require("express");
 const DatabaseError = (response) => {
     response.status(502).json({msg: "Database Error Occurs"})
 }
@@ -15,7 +16,10 @@ const emailAlreadyExist = (response) => {
 }
 
 const loginSuccessfully = (response, token) => {
-    response.cookie("access_toekn",token,{httpOnly:true}).status(200).json({msg: "Logged in Successfully", token: token})
+    response.cookie("access_token", token, {httpOnly: true}).status(200).json({
+        msg: "Logged in Successfully",
+        token: token
+    })
 }
 
 const requiredFiled = (response) => {
@@ -54,6 +58,11 @@ const CourseCreatedSuccessfully = (response) => {
 
 const CoursesList = (response, courses) => {
     if (courses.length == 0) courses = []
+    try {
+        for (let i = 0, len = courses.length; i < len; i++) {
+            delete courses[i].course_id;
+        }
+    } catch (e){}
     response.status(200).json({msg: "Courses List", courses: courses})
 }
 
@@ -87,6 +96,10 @@ const StudentInfo = (response, student) => {
     response.status(200).json({msg: "Student Info", student: student})
 }
 
+const CourseRegistered = (response) => {
+    response.status(202).json({msg: "Course Registered Successfully"})
+}
+
 
 module.exports = {
     DatabaseError,
@@ -108,5 +121,6 @@ module.exports = {
     InstructorsList,
     InstructorDeleted,
     InstructorUpdated,
-    StudentInfo
+    StudentInfo,
+    CourseRegistered
 }

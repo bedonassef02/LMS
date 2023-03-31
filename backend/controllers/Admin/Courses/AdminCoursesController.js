@@ -1,4 +1,5 @@
 var CourseModel = require("../../../models/CourseModel")
+var url = require('url');
 const {
     DatabaseError,
     CourseCreatedSuccessfully,
@@ -9,7 +10,9 @@ const courseModel = new CourseModel()
 class AdminCoursesController {
 
     async index(request, response) {
-        const courses = await courseModel.getAllCourses()
+        var url_parts = url.parse(request.url, true);
+        var query = url_parts.query;
+        const courses = await courseModel.getAllCourses(query.active)
         if (courses == 404) {
             DatabaseError(response)
         } else {

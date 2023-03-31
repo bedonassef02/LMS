@@ -1,4 +1,3 @@
-
 const conn = require("../config/dbConnection")
 const util = require('util');
 const query = util.promisify(conn.query).bind(conn);
@@ -41,8 +40,12 @@ class CourseModel {
         return 201
     }
 
-    async getAllCourses() {
-        const getAllCoursesQuery = `select * from courses`
+    async getAllCourses(isActive=false) {
+        let getAllCoursesQuery = `select * from courses`
+        if (isActive){
+            getAllCoursesQuery += " where status = 'active'"
+        }
+        console.log(getAllCoursesQuery)
         var courses = []
         try {
             const rows = await query(getAllCoursesQuery);
@@ -64,7 +67,7 @@ class CourseModel {
         return true
     }
 
-    async deleteCourse(id){
+    async deleteCourse(id) {
         const deleteCourseQuery = `delete from courses where id = ${id}`
         try {
             await query(deleteCourseQuery);
@@ -86,6 +89,16 @@ class CourseModel {
         return courses
     }
 
+    async registerCourse(info) {
+        const registerCourseQuery = `insert into student_courses set ?`
+        const values = {student_id: info.student_id, course_id: info.course_id}
+        try {
+            const rows = await query(registerCourseQuery, values);
+        } catch (err) {
+            return false
+        }
+        return true
+    }
 
 }
 

@@ -50,6 +50,11 @@ class UserModel {
         return false
     }
 
+    async decodeToken(token) {
+        const decode = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+        return decode.user
+    }
+
     createToken(user) {
         const token = jwt.sign({
                 user: {user}
@@ -65,7 +70,13 @@ class UserModel {
     async insertUser(user) {
         const insertUserQuery = `insert into users set ?`
         const hashedPassword = await this.hashPassword(user.password)
-        const values = {username: user.username, email: user.email, phone: user.phone, password: hashedPassword,type:user.type}
+        const values = {
+            username: user.username,
+            email: user.email,
+            phone: user.phone,
+            password: hashedPassword,
+            type: user.type
+        }
         try {
             const rows = await query(insertUserQuery, values);
         } catch (err) {
@@ -103,7 +114,7 @@ class UserModel {
         }
     }
 
-    async updatePassword(user){
+    async updatePassword(user) {
         user.password = await this.hashPassword(user.password)
         const changeUserPasswordQuery = `update users set password = "${user.password}" where id = ${user.id}`
         try {

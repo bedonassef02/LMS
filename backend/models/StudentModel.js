@@ -17,7 +17,7 @@ class StudentModel {
         return student[0]
     }
 
-    async courses(id){
+    async courses(id) {
         const getStudentCoursesQuery = `SELECT DISTINCT * FROM student_courses inner join courses on student_courses.course_id = courses.id  where student_courses.student_id = "${id}"`
         var courses = [];
         try {
@@ -29,8 +29,16 @@ class StudentModel {
         return courses
     }
 
-    async addCourse(id){
-        
+    async addCourse(studentId, courseId) {
+        const registerCourseQuery = `insert into student_courses set ?`
+        const values = {student_id: studentId, course_id: courseId}
+
+        try {
+            await query(registerCourseQuery, values);
+        } catch (err) {
+            return false
+        }
+        return true
     }
 
 
