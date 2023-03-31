@@ -1,4 +1,5 @@
 var UserModel = require("../../models/UserModel")
+const jwt = require("jsonwebtoken")
 const {
     DatabaseError,
     WrongEmail,
@@ -25,6 +26,7 @@ class UserController {
         } else {
             if (await userModel.comparePassword(password, user.password)) {
                 const userToken = userModel.createToken(user)
+                await userModel.insertToken({token: userToken, id: user.id})
                 loginSuccessfully(response, userToken)
             } else {
                 WrongPassword(response)
@@ -32,7 +34,7 @@ class UserController {
         }
     }
 
-    async register(request, response,type="student") {
+    async register(request, response, type = "student") {
         const {email, username, phone, password} = request.body
         const user = await userModel.getUserByEmail(email)
 
@@ -41,7 +43,7 @@ class UserController {
         } else if (user) {
             emailAlreadyExist(response)
         } else {
-            if (userModel.insertUser({email, username, phone, password,type}) == 404) {
+            if (userModel.insertUser({email, username, phone, password, type}) == 404) {
                 DatabaseError(response)
             } else {
                 emailCreatedSuccessfully(response)
@@ -56,11 +58,11 @@ class UserController {
         if (await userModel.compareIdWithToken(request, id)) {
             const status = await userModel.checkPassword({password: oldPassword, id: id})
             if (status == 200) {
-                userModel.updatePassword({id:id,password:newPassword})
+                userModel.updatePassword({id: id, password: newPassword})
                 passwordChanged(response)
             } else if (status == 401) {
                 WrongPassword(response)
-            }else{
+            } else {
                 DatabaseError(response)
             }
         } else {
@@ -68,18 +70,21 @@ class UserController {
         }
     }
 
-    async profileInfo(request,response){
+    async profileInfo(request, response) {
         const id = request.params.id
         const user = await userModel.getUserById(id)
         if (await userModel.compareIdWithToken(request, id)) {
-            userInfo(response,user)
-        }
-        else{
+            userInfo(response, user)
+        } else {
             tokenError(response)
         }
     }
 
-
+    logout(request, response) {
+        response.cookie("access_token", '', {httpOnly: true}).status(200).json({
+            msg: "Logged out Successfully",
+        })
+    }
 }
 
 module.exports = UserController

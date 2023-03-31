@@ -5,15 +5,6 @@ const jwt = require("jsonwebtoken")
 const query = util.promisify(conn.query).bind(conn);
 
 class UserModel {
-    constructor() {
-        this.username = null;
-        this.email = null;
-        this.password = null;
-        this.type = null;
-        this.isActive = false;
-    }
-
-
     async getUserById(id) {
         const getUserQuery = `SELECT * FROM users WHERE id = "${id}"`
         var user = [];
@@ -61,7 +52,7 @@ class UserModel {
             },
             process.env.ACCESS_TOKEN_SECRET,
             {
-                expiresIn: "2h",
+                expiresIn: "12h",
             }
         );
         return token
@@ -123,6 +114,40 @@ class UserModel {
         } catch (err) {
             return false
         }
+    }
+
+    async insertToken(user) {
+        const insertTokenQuery = `insert into sessions set ?`
+        const values = {user_id: user.id, token: user.token}
+
+        try {
+            await query(insertTokenQuery, values);
+        } catch (err) {
+            return false
+        }
+        return true
+    }
+
+    async isTokenExist(token) {
+        const checkTokenQuery = `SELECT * from sessions where token = "${token}"`
+        let result = true
+        try {
+            const rows = await query(checkTokenQuery);
+            if (rows.length == 0) result = false
+        } catch (err) {
+            return false
+        }
+        return result
+    }
+
+    async deleteToken(token) {
+        const deleteTokenQuery = `delete from session where user_id = ${token}`
+        try {
+            await query(deleteTokenQuery);
+        } catch (err) {
+            return false
+        }
+        return true
     }
 }
 

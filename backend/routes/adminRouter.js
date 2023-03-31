@@ -15,6 +15,6 @@ router.route("/instructors").get(adminController.Instructors.index).post(adminCo
 
 router.route("/instructors/:id").put(adminController.Instructors.updateInstructor).delete(adminController.Instructors.deleteInstructor).get(adminController.Instructors.getInstructor)
 
-// router.post("/assignInstructorToCourse",assignInstructorToCourse)
+router.post("/assignInstructorToCourse",adminController.Instructors.assignToCourse)
 
 module.exports = router

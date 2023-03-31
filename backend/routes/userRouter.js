@@ -12,6 +12,8 @@ router.post("/login", userController.login)
 
 router.post("/register", userController.register)
 
+router.post("/logout", userController.logout)
+
 router.post("/profiles/:id/password/change", validateToken.validateUserToken, userController.changePassword)
 
 router.get("/profiles/:id", validateToken.validateUserToken, userController.profileInfo)

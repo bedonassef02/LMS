@@ -1,5 +1,11 @@
 var InstructorModel = require("../../../models/InstructorModel")
-const {DatabaseError, CoursesList, InstructorsList, InstructorDeleted, InstructorUpdated} = require("../../Response/ResponseController");
+const {
+    DatabaseError,
+    CoursesList,
+    InstructorsList,
+    InstructorDeleted,
+    InstructorUpdated, InstructorAssingedToCourse
+} = require("../../Response/ResponseController");
 const instructorModel = new InstructorModel()
 var UserController = require("../../User/UserController")
 const userController = new UserController()
@@ -19,9 +25,15 @@ class AdminInstructorsController {
     }
 
     async updateInstructor(request, response) {
-        const {email, username,phone,password} = request.body
+        const {email, username, phone, password} = request.body
         const id = request.params.id
-        const isUpdated = await instructorModel.updateInstructor({id: id, username: username, email: email,phone:phone,password:password})
+        const isUpdated = await instructorModel.updateInstructor({
+            id: id,
+            username: username,
+            email: email,
+            phone: phone,
+            password: password
+        })
         if (isUpdated) {
             InstructorUpdated(response)
         } else {
@@ -45,6 +57,16 @@ class AdminInstructorsController {
         if (instructor) {
             InstructorsList(response, instructor)
         } else {
+            DatabaseError(response)
+        }
+    }
+
+    async assignToCourse(request, response) {
+        const {course_id, instructor_id} = request.body
+        const isAssigned = await instructorModel.techCourse({instructor_id: instructor_id, course_id: course_id})
+        if(isAssigned){
+            InstructorAssingedToCourse(response)
+        }else{
             DatabaseError(response)
         }
     }

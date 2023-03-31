@@ -62,7 +62,8 @@ const CoursesList = (response, courses) => {
         for (let i = 0, len = courses.length; i < len; i++) {
             delete courses[i].course_id;
         }
-    } catch (e){}
+    } catch (e) {
+    }
     response.status(200).json({msg: "Courses List", courses: courses})
 }
 
@@ -100,6 +101,17 @@ const CourseRegistered = (response) => {
     response.status(202).json({msg: "Course Registered Successfully"})
 }
 
+const InstructorAssingedToCourse = (response) => {
+    response.status(202).json({msg: "Instructor Assinged To Course Successfully"})
+}
+
+const StudentsList = (response, students) => {
+    response.status(200).json({msg: "Students List", students: students})
+}
+
+const StudentGradeUpdated = (response)=>{
+    response.status(200).json({msg: "Students Grade Updated"})
+}
 
 module.exports = {
     DatabaseError,
@@ -122,5 +134,8 @@ module.exports = {
     InstructorDeleted,
     InstructorUpdated,
     StudentInfo,
-    CourseRegistered
+    CourseRegistered,
+    InstructorAssingedToCourse,
+    StudentsList,
+    StudentGradeUpdated
 }

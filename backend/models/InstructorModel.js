@@ -1,4 +1,3 @@
-
 const conn = require("../config/dbConnection")
 const util = require('util');
 const query = util.promisify(conn.query).bind(conn);
@@ -45,7 +44,11 @@ class InstructorModel {
     async updateInstructor(instructor) {
         const updateInstructorQuery = `update users set ? where ?`
         instructor.password = await userModel.hashPassword(instructor.password)
-        const values = [{username: instructor.name, password: instructor.password,phone:instructor.phone}, {id: instructor.id}]
+        const values = [{
+            username: instructor.username,
+            password: instructor.password,
+            phone: instructor.phone
+        }, {id: instructor.id}]
         try {
             await query(updateInstructorQuery, values);
         } catch (err) {
@@ -74,6 +77,46 @@ class InstructorModel {
             return false
         }
         return instructors
+    }
+
+    async techCourse(info) {
+        const teachCourseQuery = `insert into courses_instructors set ?`
+        const values = {courseId: info.course_id, instructorId: info.instructor_id}
+        try {
+            await query(teachCourseQuery, values);
+        } catch (err) {
+            return false
+        }
+        return true
+    }
+
+    async getStudents(id) {
+        let students = []
+        const getRegisteredStudentQuery = "select student_id,username,email,phone,status from courses_instructors \n" +
+            "INNER JOIN student_courses\n" +
+            "on student_courses.course_id = courses_instructors.courseId\n" +
+            "INNER join users \n" +
+            "on users.id = student_courses.student_id\n" +
+            `where courses_instructors.instructorId = ${id} ` +
+            `ORDER by courses_instructors.courseId`
+        try {
+            const rows = await query(getRegisteredStudentQuery);
+            students = rows
+        } catch (err) {
+            return false
+        }
+        return students
+    }
+
+    async insertGrades(users) {
+        const insertGradesQuery = `update student_courses set grade = ${users.grade} where student_id = ${users.student_id} and course_id = ${users.course_id}`
+        console.log(insertGradesQuery)
+        try {
+            await query(insertGradesQuery);
+        } catch (err) {
+            return false
+        }
+        return true
     }
 }
 
