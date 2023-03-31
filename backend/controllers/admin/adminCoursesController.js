@@ -5,6 +5,7 @@ const {
     deleteThisCourse,
     getThisCourse
 } = require("../../models/adminModel");
+
 const addCourse = (req, res) => {
     addNewCourse(req, res)
 }

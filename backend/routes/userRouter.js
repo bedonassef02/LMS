@@ -1,15 +1,19 @@
 const express = require("express")
-const {login, register, index, changePassword, changeEmail} = require("../controllers/userController");
 const router = express.Router()
-const validateUserToken = require("../middleware/validateTokenHandler")
 
-router.get("/",index)
+var UserController = require("../controllers/User/UserController")
+const userController = new UserController();
+var ValidateToken = require("../middleware/ValidateToken")
+const validateToken = new ValidateToken();
 
-router.post("/login",login)
+router.get("/", userController.index)
 
-router.post("/register",register)
+router.post("/login", userController.login)
 
-router.post("/profile/:id/password/change",validateUserToken,changePassword)
-router.post("/profile/:id/email/change",validateUserToken,changeEmail)
+router.post("/register", userController.register)
+
+router.post("/profiles/:id/password/change", validateToken.validateUserToken, userController.changePassword)
+
+router.get("/profiles/:id", validateToken.validateUserToken, userController.profileInfo)
 
 module.exports = router

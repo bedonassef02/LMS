@@ -1,20 +1,20 @@
+
 const express = require("express")
-const {updateCourse, deleteCourse, getCourses,getCourse, addCourse, getInstructors, deleteInstructor, updateInstructor,
-    addInstructor, adminIndex, assignInstructorToCourse
-} = require("../controllers/adminController");
-const {getInstructor} = require("../controllers/admin/adminInstructorController");
 const router = express.Router()
 
-router.get("/",adminIndex)
+var AdminController = require("../controllers/Admin/AdminController")
+const adminController = new AdminController()
 
-router.route("/courses").get(getCourses).post(addCourse)
+router.get("/",adminController.index)
 
-router.route("/courses/:id").put(updateCourse).delete(deleteCourse).get(getCourse)
+router.route("/courses").get(adminController.Courses.index).post(adminController.Courses.addCourse)
 
-router.route("/instructors").get(getInstructors).post(addInstructor)
+router.route("/courses/:id").put(adminController.Courses.updateCourse).delete(adminController.Courses.deleteCourse).get(adminController.Courses.getCourse)
 
-router.route("/instructors/:id").put(updateInstructor).delete(deleteInstructor).get(getInstructor)
+router.route("/instructors").get(adminController.Instructors.index).post(adminController.Instructors.addInstructor)
 
-router.post("/assignInstructorToCourse",assignInstructorToCourse)
+router.route("/instructors/:id").put(adminController.Instructors.updateInstructor).delete(adminController.Instructors.deleteInstructor).get(adminController.Instructors.getInstructor)
+
+// router.post("/assignInstructorToCourse",assignInstructorToCourse)
 
 module.exports = router
