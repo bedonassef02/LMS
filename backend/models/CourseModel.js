@@ -45,7 +45,6 @@ class CourseModel {
         if (isActive){
             getAllCoursesQuery += " where status = 'active'"
         }
-        console.log(getAllCoursesQuery)
         var courses = []
         try {
             const rows = await query(getAllCoursesQuery);

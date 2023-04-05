@@ -27,7 +27,7 @@ class UserController {
             if (await userModel.comparePassword(password, user.password)) {
                 const userToken = userModel.createToken(user)
                 await userModel.insertToken({token: userToken, id: user.id})
-                loginSuccessfully(response, userToken)
+                loginSuccessfully(response, userToken,user)
             } else {
                 WrongPassword(response)
             }
@@ -37,7 +37,6 @@ class UserController {
     async register(request, response, type = "student") {
         const {email, username, phone, password} = request.body
         const user = await userModel.getUserByEmail(email)
-
         if (user == 404) {
             DatabaseError(response)
         } else if (user) {

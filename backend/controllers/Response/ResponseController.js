@@ -15,10 +15,12 @@ const emailAlreadyExist = (response) => {
     response.status(409).json({msg: "Email Already Exist"})
 }
 
-const loginSuccessfully = (response, token) => {
+const loginSuccessfully = (response, token,user) => {
+    delete user.password
     response.cookie("access_token", token, {httpOnly: true}).status(200).json({
         msg: "Logged in Successfully",
-        token: token
+        token: token,
+        user:user
     })
 }
 
