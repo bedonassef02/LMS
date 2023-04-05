@@ -13,7 +13,7 @@ const userModel = new UserModel();
 class UserController {
 
     index(request, response) {
-        response.status(200).json({msg: "Index Page"})
+        response.status(200).json({msg: "Index Page"});
     }
 
     async login(request, response) {
