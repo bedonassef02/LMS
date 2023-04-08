@@ -1,11 +1,14 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import {useCookies} from 'react-cookie';
 
 function Header(props) {
 
-    const logoutHandler =()=>{
-        localStorage.removeItem("user")
-        localStorage.setItem("access_token","")
+    const [cookies, setCookie, removeCookie] = useCookies(['user', 'access_token']);
+
+    const logoutHandler = () => {
+        removeCookie("user", {path: '/'})
+        removeCookie("access_token", {path: '/'})
     }
     return (
         <>
@@ -39,7 +42,7 @@ function Header(props) {
                                 <Link className="nav-link" to={"/"}>Learning Managment System</Link>
                             </li>
                         </ul>
-                        {localStorage.getItem("access_token") == "" ?
+                        {!cookies.user ?
                             <div className="d-flex align-items-center">
                                 <Link to={"/courses"}>Courses</Link>
                                 <button type="button" className="btn btn-link px-3 me-2">
@@ -53,9 +56,15 @@ function Header(props) {
                                 <button type="button" onClick={logoutHandler} className="btn btn-danger me-3">
                                     Logout
                                 </button>
-                                <button type="button" className="btn btn-primary me-3">
-                                    See Profile
+                                <Link to={`/profiles/${cookies.user.id}`}>
+                                    <button type="button" className="btn btn-primary me-3">
+                                        See Profile
+                                    </button>
+                                </Link>
+                                <button type="button" className="btn btn-secondary btn-circle btn-xl">
+                                    {cookies.user.username}
                                 </button>
+
                             </>
                         }
 

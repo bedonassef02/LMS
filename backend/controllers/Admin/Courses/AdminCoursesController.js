@@ -5,7 +5,9 @@ const {
     CourseCreatedSuccessfully,
     CourseAlreadyExist, CoursesList, CourseUpdated, CourseDeleted
 } = require("../../Response/ResponseController");
+
 const courseModel = new CourseModel()
+
 
 class AdminCoursesController {
 
@@ -20,6 +22,7 @@ class AdminCoursesController {
         }
     }
 
+
     async addCourse(request, response) {
         const {name, code} = request.body
         const course = await courseModel.getCourseByName(name)
@@ -28,7 +31,7 @@ class AdminCoursesController {
         } else if (!course) {
             CourseAlreadyExist(response)
         } else {
-            const isInserted = await courseModel.insertCourse({name: name, code: code})
+            const isInserted = await courseModel.insertCourse({name: name, code: code,img_url:'images/'+request.file.filename})
             if (isInserted == 404) {
                 DatabaseError(response)
             } else {

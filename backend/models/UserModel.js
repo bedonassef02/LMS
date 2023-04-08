@@ -61,6 +61,7 @@ class UserModel {
     async insertUser(user) {
         const insertUserQuery = `insert into users set ?`
         const hashedPassword = await this.hashPassword(user.password)
+        var insertedId = 0
         const values = {
             username: user.username,
             email: user.email,
@@ -70,10 +71,11 @@ class UserModel {
         }
         try {
             const rows = await query(insertUserQuery, values);
+            insertedId = rows.insertId
         } catch (err) {
             return 404
         }
-        return 201
+        return insertedId
     }
 
     async compareIdWithToken(request, id) {
@@ -149,6 +151,26 @@ class UserModel {
         }
         return true
     }
+
+    async offline(id){
+        const setOffline = `update users set status = "in-active" where id = ${id}`
+        try {
+            await query(setOffline);
+        } catch (err) {
+            return false
+        }
+        return true
+    }
+    async online(id){
+        const setOnline = `update users set status = "active" where id = ${id}`
+        try {
+            await query(setOnline);
+        } catch (err) {
+            return false
+        }
+        return true
+    }
+
 }
 
 module.exports = UserModel

@@ -82,8 +82,10 @@ class InstructorModel {
     async techCourse(info) {
         const teachCourseQuery = `insert into courses_instructors set ?`
         const values = {courseId: info.course_id, instructorId: info.instructor_id}
+        const activeCourse = `update courses set status = "active" where id = ${info.course_id}`
         try {
             await query(teachCourseQuery, values);
+            await query(activeCourse);
         } catch (err) {
             return false
         }

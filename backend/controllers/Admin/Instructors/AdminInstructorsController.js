@@ -21,7 +21,7 @@ class AdminInstructorsController {
     }
 
     async addInstructor(request, response) {
-        userController.register(request, response, "instructor")
+        await userController.register(request, response, "instructor")
     }
 
     async updateInstructor(request, response) {

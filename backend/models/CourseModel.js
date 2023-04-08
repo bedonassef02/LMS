@@ -31,7 +31,7 @@ class CourseModel {
 
     async insertCourse(course) {
         const insertCourseQuery = `insert into courses set ?`
-        const values = {name: course.name, code: course.code, status: 'in-active'}
+        const values = {name: course.name, code: course.code, status: 'in-active',img_url:course.img_url}
         try {
             await query(insertCourseQuery, values);
         } catch (err) {

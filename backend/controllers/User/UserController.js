@@ -27,7 +27,8 @@ class UserController {
             if (await userModel.comparePassword(password, user.password)) {
                 const userToken = userModel.createToken(user)
                 await userModel.insertToken({token: userToken, id: user.id})
-                loginSuccessfully(response, userToken,user)
+                await userModel.online(user.id)
+                loginSuccessfully(response, userToken, user)
             } else {
                 WrongPassword(response)
             }
@@ -42,7 +43,8 @@ class UserController {
         } else if (user) {
             emailAlreadyExist(response)
         } else {
-            if (userModel.insertUser({email, username, phone, password, type}) == 404) {
+            const isInserted = await userModel.insertUser({email, username, phone, password, type})
+            if (isInserted == 404) {
                 DatabaseError(response)
             } else {
                 emailCreatedSuccessfully(response)
@@ -79,11 +81,15 @@ class UserController {
         }
     }
 
-    logout(request, response) {
+    async logout(request, response) {
+        const token = request.headers.cookie
+        const user = await userModel.decodeToken(request.headers.cookie.split("=")[1])
+        await userModel.offline(user.user.id)
         response.cookie("access_token", '', {httpOnly: true}).status(200).json({
             msg: "Logged out Successfully",
         })
     }
+
 }
 
 module.exports = UserController
