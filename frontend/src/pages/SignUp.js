@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import Axios from "axios";
+import {useNavigate} from "react-router-dom";
+import {useCookies} from "react-cookie";
 
 function SignUp(props) {
 
@@ -7,6 +9,8 @@ function SignUp(props) {
     const [password, setPassword] = useState("")
     const [username, setUsername] = useState("")
     const [phone, setPhone] = useState("")
+    const navigate = useNavigate()
+    const [cookies, setCookie, removeCookie] = useCookies(['access_token', 'user']);
 
     const formHandler = (event) => {
         event.preventDefault();
@@ -17,7 +21,16 @@ function SignUp(props) {
             username: username,
             phone: phone
         }).then(res => {
-            console.log("Account Created")
+            Axios.post("http://localhost:5000/api/login", {
+                email: email,
+                password: password,
+            }).then(result => {
+                let expires = new Date()
+                expires.setTime(expires.getTime() + (1000 * 1000))
+                setCookie('access_token', result.data.token, {path: '/', expires})
+                setCookie('user', result.data.user, {path: '/', expires})
+                navigate("/")
+            })
         }).catch(err => {
             console.log("ERROR")
         })

@@ -5,6 +5,10 @@ import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import Courses from "./pages/Courses";
 import SignUp from "./pages/SignUp";
+import AddCourse from "./pages/courses/AddCourse";
+import Profile from "./pages/Profile";
+import Course from "./pages/courses/Course";
+import AdminCourses from "./pages/admin/AdminCourses";
 
 
 export const router = createBrowserRouter([
@@ -25,12 +29,32 @@ export const router = createBrowserRouter([
                 element: <SignUp/>
             },
             {
-                path: "courses",
-                element: <Courses/>,
+                path: "/courses",
                 children: [
                     {
-                        path: ":id",
+                        path: "",
                         element: <Courses/>
+                    },
+                    {
+                        path: ":id",
+                        element: <Course/>
+                    },
+                    {
+                        path: "add",
+                        element: <AddCourse/>
+                    }
+                ]
+            },
+            {
+                path: "/profiles/:id",
+                element: <Profile/>
+            },
+            {
+                path:"/admin",
+                children:[
+                    {
+                        path: "courses",
+                        element: <AdminCourses/>
                     }
                 ]
             }
