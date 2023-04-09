@@ -1,0 +1,87 @@
+.admin {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.admin h1 {
+    margin-top: 0;
+}
+
+.course-list {
+    margin-top: 20px;
+}
+
+.course {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.course h2 {
+    margin-top: 0;
+}
+
+.course-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.add-course {
+    display: block;
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.instructor-list {
+    margin-top: 20px;
+}
+
+.instructor {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.instructor h2 {
+    margin-top: 0;
+}
+
+.instructor-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.add-instructor {
+    display: block;
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.danger-button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.danger-button:hover {
+    background-color: #c82333;
+}

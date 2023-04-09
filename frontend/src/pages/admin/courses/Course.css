@@ -1,0 +1,40 @@
+.course-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.course {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.course img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    object-fit: cover;
+}
+
+.course-details {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.delete-button {
+    border: none;
+    background-color: red;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+    transition: color 0.3s ease-in-out;
+}
+
+.delete-button:hover {
+    background-color: #d90505;
+}

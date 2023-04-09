@@ -1,0 +1,93 @@
+.create-course {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #d1eaf5;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.create-course h2 {
+    margin-top: 0;
+    font-size: 2rem;
+    text-align: center;
+    color: #333;
+}
+
+.create-course form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.create-course label {
+    font-size: 1.2rem;
+    text-align: center;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.create-course input,
+.create-course textarea {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    background-color: #fff;
+}
+
+.create-course button[type="submit"] {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.create-course button[type="submit"]:hover {
+    background-color: #555;
+}
+
+.create-course .image-preview {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.create-course .image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+.create-course .image-preview::before {
+    content: "Upload Image";
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    color: #999;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+.create-course .image-preview input[type="file"] {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}

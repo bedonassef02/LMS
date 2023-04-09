@@ -1,0 +1,39 @@
+.course-info {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.course-image img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.course-details h1 {
+    margin-top: 0;
+}
+
+.course-details p {
+    margin-bottom: 10px;
+}
+
+.course-metadata {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.course-metadata p {
+    margin: 0;
+}
+
+.course-details a {
+    display: block;
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 5px;
+}
