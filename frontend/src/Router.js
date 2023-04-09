@@ -1,18 +1,14 @@
-import {createBrowserRouter} from "react-router-dom";
 import App from "./App";
-import Login from "./pages/Login";
-import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
-import Courses from "./pages/Courses";
-import SignUp from "./pages/SignUp";
-import AddCourse from "./pages/courses/AddCourse";
-import Profile from "./pages/Profile";
-import Course from "./pages/courses/Course";
-import AdminCourses from "./pages/admin/AdminCourses";
-import AssignCourseToInstructor from "./pages/admin/AssignCourseToInstructor";
-import InstructorHome from "./pages/instrutors/InstructorHome";
-import InstructorCourses from "./pages/instrutors/InstructorCourses";
-
+import {createBrowserRouter} from "react-router-dom";
+import LoginPage from "./pages/login/LoginPage";
+import RegisterPage from "./pages/register/RegisterPage";
+import CoursesPage from "./pages/courses/CoursesPage";
+import Profile from "./pages/profile/Profile";
+import CourseInfo from "./pages/courses/course-info/CourseInfo";
+import Admin from "./pages/admin/Admin";
+import ChangePassword from "./pages/profile/change-password/ChangePassword";
+import CreateCourse from "./pages/admin/courses/create-course/CreateCourse";
 
 export const router = createBrowserRouter([
     {
@@ -24,72 +20,58 @@ export const router = createBrowserRouter([
                 element: <Home/>
             },
             {
-                path: "/login",
-                element: <Login/>
+                path: "login",
+                element: <LoginPage/>
             },
             {
-                path: "/register",
-                element: <SignUp/>
+                path: "register",
+                element: <RegisterPage/>
             },
             {
-                path: "/courses",
+                path: "courses",
                 children: [
                     {
                         path: "",
-                        element: <Courses/>
+                        element: <CoursesPage/>
                     },
                     {
                         path: ":id",
-                        element: <Course/>
-                    },
+                        element: <CourseInfo/>
+                    }
                 ]
-            },
+            }
+            ,
             {
-                path: "/profiles/:id",
-                element: <Profile/>
-            },
-            {
-                path: "/admin",
+                path: "profiles/:user_id",
                 children: [
                     {
-                        path: "courses",
-                        children: [
-                            {
-                                path: "",
-                                element: <AdminCourses/>
-                            }, {
-                                path: ":create",
-                                element: <AddCourse/>
-                            }, {
-                                path: ":id/assign",
-                                element: <AssignCourseToInstructor/>
-                            }
-                        ]
+                        path: "",
+                        element: <Profile/>
+                    },
+                    {
+                        path: "change-password",
+                        element: <ChangePassword/>
                     }
                 ]
             },
             {
-                path: "/instructors",
+                path: "admin",
                 children: [
                     {
-                        path: ":id",
+                        path: "",
+                        element: <Admin/>
+                    },
+                    {
+                        path: "courses",
                         children: [
                             {
-                                path: "",
-                                element: <InstructorHome/>
-                            },
-                            {
-                                path: "courses/:course_id",
-                                element: <InstructorCourses/>
+                                path: "create",
+                                element: <CreateCourse/>
                             }
                         ]
                     }
                 ]
             }
         ]
-    },
-    {
-        path: "*",
-        element: <NotFound/>
     }
 ])

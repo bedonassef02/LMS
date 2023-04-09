@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import Heading from "../components/Heading";
-import CardsList from "../components/CardsList";
 import Axios from "axios";
+import CourseList from "../components/courses/CourseList";
+import Carousel from "../components/carousel/Carousel";
 
 function Home(props) {
 
@@ -9,13 +9,16 @@ function Home(props) {
 
     useEffect(() => {
         Axios.get("http://localhost:5000/api/courses")
-            .then(res=>{setCourses(res.data.courses)})
+            .then(res => {
+                setCourses(res.data.courses)
+            })
     }, [])
     return (
-        <>
-            <Heading name={"Our Courses"}/>
-            <CardsList courses={courses}/>
-        </>
+        <div>
+            <Carousel/>
+            <center><h1>Our Courses</h1></center>
+            <CourseList courses={courses}/>
+        </div>
     );
 }
 
