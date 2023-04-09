@@ -7,7 +7,7 @@ import AdminNavBar from "../components/AdminNavBar";
 
 function Profile(props) {
 
-    const [cookies, setCookie, removeCookie] = useCookies(['user','access_token']);
+    const [cookies, setCookie, removeCookie] = useCookies(['user', 'access_token']);
     const [courses, setCourses] = useState([])
     const [instructors, setInstructors] = useState([])
     const [url, setUrl] = useState("http://localhost:5000/api/courses")
@@ -48,7 +48,7 @@ function Profile(props) {
     return (
         <>
             <h1>Profile</h1>
-            {cookies.user.type == "admin"?<><AdminNavBar/> <br/><br/><br/></>:null}
+            {cookies.user.type == "admin" ? <><AdminNavBar/> <br/><br/><br/></> : null}
             <table className="table table-dark">
                 <thead>
                 <tr>
@@ -79,6 +79,7 @@ function Profile(props) {
                     <th scope="col">Course</th>
                     <th scope="col">Code</th>
                     <th scope="col">Status</th>
+                    {cookies.user.type == "student" ? <th scope="col">Grade</th> : null}
                 </tr>
                 </thead>
                 <tbody>
@@ -91,6 +92,7 @@ function Profile(props) {
                                 <td>{course.name}</td>
                                 <td>{course.code}</td>
                                 <td>{course.status}</td>
+                                {cookies.user.type == "student" ? <td>{course.grade}</td> : null}
                             </tr>)
                         : null
                 }
@@ -119,7 +121,7 @@ function Profile(props) {
                                         <th scope="row">{instructor.id}</th>
                                         <td>{instructor.username}</td>
                                         <td>{instructor.email}</td>
-                                        <td>{instructor.status}</td>
+                                        <td>{instructor.phone}</td>
                                     </tr>)
                                 : null
                         }

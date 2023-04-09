@@ -26,7 +26,7 @@ function SignUp(props) {
                 password: password,
             }).then(result => {
                 let expires = new Date()
-                expires.setTime(expires.getTime() + (1000 * 1000))
+                expires.setTime(expires.getTime() + (100000 * 100000))
                 setCookie('access_token', result.data.token, {path: '/', expires})
                 setCookie('user', result.data.user, {path: '/', expires})
                 navigate("/")

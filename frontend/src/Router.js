@@ -9,6 +9,9 @@ import AddCourse from "./pages/courses/AddCourse";
 import Profile from "./pages/Profile";
 import Course from "./pages/courses/Course";
 import AdminCourses from "./pages/admin/AdminCourses";
+import AssignCourseToInstructor from "./pages/admin/AssignCourseToInstructor";
+import InstructorHome from "./pages/instrutors/InstructorHome";
+import InstructorCourses from "./pages/instrutors/InstructorCourses";
 
 
 export const router = createBrowserRouter([
@@ -39,10 +42,6 @@ export const router = createBrowserRouter([
                         path: ":id",
                         element: <Course/>
                     },
-                    {
-                        path: "add",
-                        element: <AddCourse/>
-                    }
                 ]
             },
             {
@@ -50,11 +49,40 @@ export const router = createBrowserRouter([
                 element: <Profile/>
             },
             {
-                path:"/admin",
-                children:[
+                path: "/admin",
+                children: [
                     {
                         path: "courses",
-                        element: <AdminCourses/>
+                        children: [
+                            {
+                                path: "",
+                                element: <AdminCourses/>
+                            }, {
+                                path: ":create",
+                                element: <AddCourse/>
+                            }, {
+                                path: ":id/assign",
+                                element: <AssignCourseToInstructor/>
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                path: "/instructors",
+                children: [
+                    {
+                        path: ":id",
+                        children: [
+                            {
+                                path: "",
+                                element: <InstructorHome/>
+                            },
+                            {
+                                path: "courses/:course_id",
+                                element: <InstructorCourses/>
+                            }
+                        ]
                     }
                 ]
             }

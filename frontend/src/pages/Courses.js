@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import Axios from "axios";
-import {Link} from "react-router-dom";
+import {Link, redirect, useParams} from "react-router-dom";
+import {useCookies} from "react-cookie";
 
 function Courses(props) {
     const [link, setLink] = useState("http://localhost:5000/api/courses")
     const [courses, setCourses] = useState([])
+    const [cookies, setCookie, removeCookie] = useCookies(['user', 'access_token']);
 
     useEffect(() => {
         Axios.get(link)
@@ -12,7 +14,7 @@ function Courses(props) {
                 setCourses(res.data.courses)
                 console.log(courses)
             })
-    }, [])
+    }, [link])
 
     const ActiveCourses = () => {
         if (link.endsWith("true")) {
@@ -21,6 +23,28 @@ function Courses(props) {
             setLink(link + "?active=true")
         }
         console.log(link)
+    }
+
+    const registerHandler = (event)=>{
+        const config = {
+            headers: { Authorization: `Bearer ${cookies.access_token}` }
+        };
+
+        const bodyParameters = {
+            headers: { Authorization: `Bearer ${cookies.access_token}` }
+        };
+
+        Axios.post(
+            `http://localhost:5000/api/courses/${event.target.value}/register`,
+            bodyParameters,
+            config
+        ).then(res=>{
+            console.log(res.data)}).catch(console.log);
+
+        Axios.post(`http://localhost:5000/api/courses/${event.target.value}/register`, config)
+            .then(res => {
+                console.log(res.data)
+            })
     }
 
     return (
@@ -47,7 +71,7 @@ function Courses(props) {
                                                 className="text-muted">{course.status}</small></p>
 
                                             {course.status == "active" ?
-                                                <button type="button" className="btn btn-primary me-3">
+                                                <button type="button" onClick={registerHandler} value={course.id} className="btn btn-primary me-3">
                                                     Register
                                                 </button>
                                                 : <button type="button" className="btn btn-danger me-3">

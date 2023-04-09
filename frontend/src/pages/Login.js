@@ -17,7 +17,7 @@ function Login(props) {
             password:password
         }).then(res=>{
             let expires = new Date()
-            expires.setTime(expires.getTime() + (1000 * 1000))
+            expires.setTime(expires.getTime() + (100000 * 100000))
             setCookie('access_token', res.data.token, { path: '/',  expires})
             setCookie('user', res.data.user, { path: '/',  expires})
             setAuth(true)

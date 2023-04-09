@@ -6,7 +6,8 @@ const instructorController = new InstructorController()
 
 
 router.get('/:id/students', instructorController.getStudents)
-router.get("/:id/courses/:id/students",instructorController.setStudentGrade)
+router.get('/:id/courses', instructorController.getCourses)
+router.get("/:instructor_id/courses/:course_id/students",instructorController.getStudentInCourse)
 router.post("/:instructor_id/courses/:course_id/students/:student_id",instructorController.setStudentGrade)
 
 module.exports = router

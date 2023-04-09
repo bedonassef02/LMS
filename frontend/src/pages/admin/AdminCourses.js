@@ -1,23 +1,45 @@
 import React, {useEffect, useState} from 'react';
 import Axios from "axios";
+import AdminNavBar from "../../components/AdminNavBar";
+import {useCookies} from "react-cookie";
+import {Link} from "react-router-dom";
 
 function AdminCourses(props) {
 
     const [link, setLink] = useState("http://localhost:5000/api/courses")
     const [courses, setCourses] = useState([])
+    const [cookies, setCookie, removeCookie] = useCookies(['user', 'access_token']);
 
     useEffect(() => {
         Axios.get(link)
             .then(res => {
                 setCourses(res.data.courses)
-                console.log(courses)
             })
     }, [])
 
+    const deleteCourseHandler = (event) => {
+        let config = {
+            headers: {
+                'Authorization': 'Bearer ' + cookies.access_token
+            }
+        }
+        Axios.delete(`http://localhost:5000/api/admin/courses/${event.target.value}`, config)
+            .then(res => {
+                setCourses(courses.filter(course => course.id != event.target.value))
+                console.log(res.data)
+            })
+    }
+
     return (
         <center>
+            <AdminNavBar/>
             <h1>Admin Courses</h1>
-
+            <Link to={"/admin/courses/create"}>
+                <button type="button" className="btn btn-primary me-3">
+                    Create Course
+                </button>
+            </Link>
+            <br/><br/><br/>
             <div className="card mb-3" style={{"maxWidth": "540px"}}>
                 {
                     !courses ? null :
@@ -36,12 +58,16 @@ function AdminCourses(props) {
                                             <p className="card-text"><small
                                                 className="text-muted">{course.status}</small></p>
 
-                                            <button type="button" className="btn btn-success me-3">
-                                                Assign Instructor
-                                            </button><button type="button" className="btn btn-primary me-3">
+                                            <Link to={`/admin/courses/${course.id}/assign`}>
+                                                <button type="button" className="btn btn-success me-3">
+                                                    Assign Instructor
+                                                </button>
+                                            </Link>
+                                            <button type="button" className="btn btn-primary me-3">
                                                 Edit
                                             </button>
-                                            <button type="button" className="btn btn-danger me-3">
+                                            <button type="button" onClick={deleteCourseHandler} value={course.id}
+                                                    className="btn btn-danger me-3">
                                                 Delete
                                             </button>
                                         </div>

@@ -10,7 +10,7 @@ const coursesController = new CoursesController()
 var AdminController = require("../controllers/Admin/AdminController")
 const adminController = new AdminController()
 
-router.post('/:id/register',validateToken.validateStudentToken,coursesController.register)
+router.post('/:id/register',validateToken.validateStudentToken,coursesController.register);
 router.get("/",adminController.Courses.index)
 router.get("/:id",adminController.Courses.getCourse)
 

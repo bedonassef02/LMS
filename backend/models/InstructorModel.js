@@ -87,6 +87,7 @@ class InstructorModel {
             await query(teachCourseQuery, values);
             await query(activeCourse);
         } catch (err) {
+            console.log(err)
             return false
         }
         return true
@@ -119,6 +120,41 @@ class InstructorModel {
             return false
         }
         return true
+    }
+
+    async getStudentsInCourse(info) {
+        const getStudentsInCourseQuery = "select users.id,users.username,student_courses.grade" +
+            " from courses_instructors\n" +
+            "INNER JOIN courses\n" +
+            "on courses.id = courses_instructors.courseId \n" +
+            "INNER join student_courses\n" +
+            "on student_courses.course_id = courses.id\n" +
+            "inner join users \n" +
+            "on users.id = student_courses.student_id\n" +
+            `where courses_instructors.instructorId = ${info.instructor_id}` + ` and courseId = ${info.course_id}`
+        var students = []
+        try {
+            const rows = await query(getStudentsInCourseQuery);
+            students = rows
+        } catch (err) {
+            console.log(err)
+        }
+        return students
+    }
+
+    async getCourses(id) {
+        let courses = []
+        const getCoursesQuery = "SELECT id,name,code from courses_instructors\n" +
+            "INNER join courses\n" +
+            "on courses.id = courses_instructors.courseId\n" +
+            `where courses_instructors.instructorId = ${id}`
+        try {
+            const rows = await query(getCoursesQuery);
+            courses = rows
+        } catch (err) {
+            return false
+        }
+        return courses
     }
 }
 

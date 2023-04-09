@@ -56,6 +56,14 @@ function Header(props) {
                                 <button type="button" onClick={logoutHandler} className="btn btn-danger me-3">
                                     Logout
                                 </button>
+                                {cookies.user.type == "instructor" ?
+                                    < Link to={`/instructors/${cookies.user.id}`}>
+                                        <button type="button" className="btn btn-primary me-3">
+                                            Instrucors
+                                        </button>
+                                    </Link>
+                                    : null
+                                }
                                 <Link to={`/profiles/${cookies.user.id}`}>
                                     <button type="button" className="btn btn-primary me-3">
                                         See Profile

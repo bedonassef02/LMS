@@ -8,7 +8,7 @@ const coursesModel = new CoursesModel()
 class CoursesController {
 
     async register(request, response) {
-        const access_token = request.headers.cookie.split("=")[1]
+        const access_token = request.headers.authorization.split(" ")[1]
         const course_id = request.params.id
         const user = await userModel.decodeToken(access_token)
         if (user.user.type == "student") {
