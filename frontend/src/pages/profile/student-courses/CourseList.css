@@ -1,0 +1,23 @@
+table {
+    border-collapse: collapse;
+    border-radius: 0.5rem;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+}
+
+th,
+td {
+    padding: 1rem;
+}
+
+thead {
+    background-color: #f8f9fa;
+}
+
+th {
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: #e9ecef;
+}

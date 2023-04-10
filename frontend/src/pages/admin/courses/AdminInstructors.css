@@ -1,0 +1,116 @@
+.admin-instructors-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-top: 2rem;
+}
+
+.instructors-table {
+    border-collapse: collapse;
+    margin-top: 2rem;
+    width: 80%;
+    max-width: 800px;
+}
+
+th {
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 1rem;
+    border-bottom: 2px solid #ccc;
+    text-align: left;
+}
+
+td {
+    padding: 1rem;
+    border-bottom: 1px solid #ccc;
+}
+
+.edit-button,
+.delete-button,
+.save-button,
+.cancel-button {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+    background-color: #eee;
+    color: #333;
+    border-color: #333;
+}
+
+.save-button {
+    background-color: #28a745;
+    color: #fff;
+    border-color: #28a745;
+}
+
+.save-button:hover {
+    background-color: #218838;
+    border-color: #218838;
+}
+
+.cancel-button {
+    background-color: #dc3545;
+    color: #fff;
+    border-color: #dc3545;
+}
+
+.cancel-button:hover {
+    background-color: #c82333;
+    border-color: #c82333;
+}
+
+input {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+    margin-bottom: 0.5rem;
+}
+
+input:focus {
+    outline: none;
+    border-color: #333;
+}
+
+@media screen and (max-width: 600px) {
+    .instructors-table {
+        width: 100%;
+    }
+}
+
+.delete-button {
+    background-color: #dc3545;
+    border: 1px solid #dc3545;
+    color: #fff;
+}
+
+.delete-button:hover {
+    background-color: #c52535;
+    color: #fff;
+}
+
+.edit-button {
+    background-color: #007bff;
+    color: #fff;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.edit-button:hover {
+    background-color: #0062cc;
+}

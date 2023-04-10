@@ -45,6 +45,7 @@ class InstructorModel {
         const updateInstructorQuery = `update users set ? where ?`
         instructor.password = await userModel.hashPassword(instructor.password)
         const values = [{
+            email:instructor.email,
             username: instructor.username,
             password: instructor.password,
             phone: instructor.phone
@@ -144,7 +145,7 @@ class InstructorModel {
 
     async getCourses(id) {
         let courses = []
-        const getCoursesQuery = "SELECT id,name,code from courses_instructors\n" +
+        const getCoursesQuery = "SELECT id,name,code,img_url from courses_instructors\n" +
             "INNER join courses\n" +
             "on courses.id = courses_instructors.courseId\n" +
             `where courses_instructors.instructorId = ${id}`

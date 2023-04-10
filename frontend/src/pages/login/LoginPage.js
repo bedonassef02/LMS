@@ -10,7 +10,7 @@ const LoginPage = () => {
     const [error, setError] = useState('');
     const [cookies, setCookie] = useCookies(['access_token', 'user'])
     const navigate = useNavigate()
-    const handleUsernameChange = (event) => {
+    const handleEmailChange = (event) => {
         setEmail(event.target.value);
     };
 
@@ -34,12 +34,16 @@ const LoginPage = () => {
         })
     };
     return (
-        <div className="login-page">
+        <div className="create-course">
             <div className="form">
                 <h2>Login</h2>
                 <form className="login-form" onSubmit={handleSubmit}>
-                    <input type="text" placeholder="Username" onChange={handleUsernameChange}/>
-                    <input type="password" placeholder="Password" onChange={handlePasswordChange}/>
+                    <label htmlFor="name">email</label>
+                    <input type="email" id="name" value={email} onChange={handleEmailChange} required/>
+
+                    <label htmlFor="name">password</label>
+                    <input type="password" id="name" value={password} onChange={handlePasswordChange} required/>
+
                     {error && <div className="error">{error}</div>}
                     <button type={"submit"}>Login</button>
                 </form>

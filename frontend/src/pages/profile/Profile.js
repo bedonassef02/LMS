@@ -36,9 +36,15 @@ const Profile = () => {
                             <p>{cookies.user.email}</p>
                             <p>{cookies.user.phone}</p>
                             <p>{cookies.user.type}</p>
-                            <Link to="change-password" className="change-password-button">
+                            <Link to="change-password" className="btn">
                                 Change Password
                             </Link>
+                            <br/>
+                            <br/>
+                            {isLoggedIn && cookies.user.type == "student" ?
+                                <Link to="courses" className="btn">
+                                    Courses
+                                </Link> : null}
                         </div>
                     </div>
                 </div>}

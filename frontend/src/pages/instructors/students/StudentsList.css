@@ -1,0 +1,70 @@
+.students-list {
+    margin-top: 20px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 16px;
+    color: #444;
+    border: 1px solid #d6d6d6;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #d6d6d6;
+}
+
+th {
+    background-color: #f2f2f2;
+    color: #222;
+    border-bottom: 2px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+tr:hover {
+    background-color: #f2f2f2;
+}
+
+td:first-child {
+    font-weight: bold;
+}
+
+input[type="text"] {
+    display: block;
+    margin: auto;
+    width: 50%;
+    height: 25px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    text-align: center;
+    transition: all 0.5s ease;
+}
+
+input[type="text"]:focus {
+    border: 1px solid #2c80b9;
+    box-shadow: 0px 0px 5px #2c80b9;
+}
+
+button {
+    display: block;
+    margin-top: 20px;
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #2c80b9;
+    color: #fff;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    width: 80px; /* adjust the width as needed */
+}
+
+button:hover {
+    background-color: #1a5d7a;
+}

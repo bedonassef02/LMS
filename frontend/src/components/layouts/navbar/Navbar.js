@@ -1,6 +1,6 @@
 import React from 'react';
 import './Navbar.css';
-import {FaUserCircle, FaSignInAlt, FaSignOutAlt, FaChalkboardTeacher, FaDatabase} from 'react-icons/fa';
+import {FaUserCircle, FaSignInAlt, FaSignOutAlt, FaChalkboardTeacher, FaDatabase, FaUserTie} from 'react-icons/fa';
 import {Link} from "react-router-dom";
 import {useCookies} from "react-cookie";
 
@@ -22,6 +22,11 @@ const Navbar = () => {
                         <li className="nav-item">
                             <Link className="nav-link" to={"/admin"}>Admin <FaDatabase/></Link>
                         </li>
+                        :isLoggedIn && cookies.user.type == "instructor"
+                            ?
+                            <li className="nav-item">
+                                <Link className="nav-link" to={"/instructors/"+cookies.user.id}>Instructor <FaUserTie/></Link>
+                            </li>
                         :
                         <li className="nav-item">
                             <Link className="nav-link" to={"/courses"}>Courses <FaChalkboardTeacher/></Link>

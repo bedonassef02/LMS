@@ -10,7 +10,7 @@ const CourseCard = ({ course }) => {
             <div className="content-container">
                 <h3>{course.name}</h3>
                 <p>{course.code}</p>
-                <Link to={`/courses/${course.id}`}>
+                <Link to={`/courses/${course.id}`} >
                     <button>More</button>
                 </Link>
             </div>

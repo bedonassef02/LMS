@@ -50,18 +50,26 @@ const RegisterPage = () => {
         })
     }
     return (
-        <div className="register-page">
+        <div className="create-course">
             <div className="form">
                 <h2>Register</h2>
                 <form className="register-form" onSubmit={formHandler}>
-                    <input type="text" placeholder="Userame" onChange={usernameHandler}/>
-                    <input type="email" placeholder="Email Address" onChange={emailHandler}/>
-                    <input type="password" placeholder="Password" onChange={passwordHandler}/>
-                    <input type="text" placeholder="Phone" onChange={phoneHandler}/>
-                    <button>Register</button>
-                    <p className="message">
+                    <label htmlFor="name">username</label>
+                    <input type="text" id="name" value={username} onChange={usernameHandler} required/>
+
+                    <label htmlFor="email">email</label>
+                    <input type="email" id="email" value={email} onChange={emailHandler} required/>
+
+                    <label htmlFor="password">password</label>
+                    <input type="password" id="password" value={password} onChange={passwordHandler} required/>
+
+                    <label htmlFor="phone">phone</label>
+                    <input type="text" id="password" value={phone} onChange={phoneHandler} required/>
+
+                    <button type="submit">Register</button>
+                    <small className="message">
                         Already registered? <Link to={"/login"}>Login</Link>
-                    </p>
+                    </small>
                 </form>
             </div>
         </div>

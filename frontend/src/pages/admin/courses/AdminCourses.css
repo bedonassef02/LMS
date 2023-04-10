@@ -1,0 +1,82 @@
+.admin-courses-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f6f6f6;
+}
+
+.courses-table {
+    margin-top: 50px;
+    border-collapse: collapse;
+    width: 80%;
+    background-color: #fff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+}
+
+.courses-table th,
+.courses-table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+.courses-table th {
+    font-weight: bold;
+    background-color: #007bff;
+    color: #fff;
+}
+
+.courses-table td select {
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+}
+
+.delete-button,
+.edit-button {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.delete-button {
+    background-color: #dc3545;
+    color: #fff;
+    margin-right: 10px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+.edit-button {
+    background-color: #007bff;
+    color: #fff;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.edit-button:hover {
+    background-color: #0062cc;
+}
+
+.courses-table td button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.courses-table td button:not(:disabled) {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.courses-table td button {
+    vertical-align: middle;
+}
